@@ -9,7 +9,8 @@
     <v-row>
       <v-col>
         <v-carousel>
-          <v-carousel-item v-for="(item,i) in meetups" :key="i" :src="item.imageURL">
+          <v-carousel-item v-for="(item,i) in meetups" :key="i" :src="item.imageURL"k
+          @click="onLoadMeetup(item.id)" style="cursor: pointer">
           </v-carousel-item>
         </v-carousel>
       </v-col>
@@ -29,8 +30,13 @@ export default {
   props:['inhalt'],
   data:() =>({
     meetups:[
-      {imageURL:require("@/assets/ensiferum.jpg"), id: 'asdfgh', title: 'meetup in New York'}
+      {imageURL:require("@/assets/ensiferum.jpg"), id: 1, title: 'meetup in New York'}
       ]
-})
+}),
+  methods: {
+    onLoadMeetup(id){
+      this.$router.push('/meetups/'+id)
+    }
+  }
 }
 </script>

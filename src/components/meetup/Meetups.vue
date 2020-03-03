@@ -12,7 +12,7 @@
                                 <v-card-title>Meetups</v-card-title>
                                 <v-card-subtitle>27.04.2020 Augustiner-Keller</v-card-subtitle>
                                 <v-card-actions>
-                                    <v-btn class="ma-2" color="success">Teilnehmen! <v-icon right dense>mdi-thumb-up</v-icon></v-btn>
+                                    <v-btn class="ma-2" color="success" to="/meetups/1">Ansehen <v-icon right dense>mdi-thumb-up</v-icon></v-btn>
                                 </v-card-actions>
                             </v-col>
                         </v-row>
