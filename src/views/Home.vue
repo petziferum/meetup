@@ -9,7 +9,7 @@
     <v-row>
       <v-col>
         <v-carousel>
-          <v-carousel-item v-for="(item,i) in meetups" :key="i" :src="item.imageURL"k
+          <v-carousel-item v-for="(item,i) in meetups" :key="i" :src="item.imageURL"
           @click="onLoadMeetup(item.id)" style="cursor: pointer">
           </v-carousel-item>
         </v-carousel>
