@@ -11,9 +11,9 @@
 
     <v-content class="ma-4">
       <h1>Home</h1>
-      <span id="settingsalert" v-if="settings"><v-alert color="error" border="left" colored-border elevation="1">Edit Settings</v-alert> </span>
+
       <span v-if="showMeetups"><v-alert color="success" border="left" colored-border elevation="10">Upcoming Meetups</v-alert> </span>
-      <app-home v-for="n in 3" :key="n" :inhalt="'Inhalt'+n"></app-home>
+
       <app-home inhalt="Settings"></app-home>
     </v-content>
   </v-app>
