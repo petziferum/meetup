@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Meetups from '@/components/meetup/Meetups'
+import CreateMeetup from "@/components/meetup/CreateMeetup";
+import Profile from "@/components/user/Profile";
+import SignIn from "@/components/user/SignIn";
+import SignUp from "@/components/user/SignUp";
 
 Vue.use(VueRouter)
 
@@ -9,6 +14,31 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/meetups',
+    name: 'meetups',
+    component: Meetups
+  },
+  {
+    path: '/meetup/new',
+    name: 'CreateMeetup',
+    component: CreateMeetup
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile
+  },
+  {
+    path: '/signin',
+    name: 'Signin',
+    component: SignIn
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: SignUp
   },
   {
     path: '/',
@@ -21,7 +51,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 })
 
 export default router

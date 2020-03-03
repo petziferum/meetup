@@ -1,10 +1,20 @@
 <template>
-  <div class="home" :id="inhalt">
-    <v-card class="ma-2" height="700px" max-width="300px" dark>
-    <img alt="Vue logo" src="../assets/logo.png">
-    <v-card-title >{{inhalt}}</v-card-title>
-    </v-card>
-  </div>
+  <v-container class="mx-auto" :id="inhalt">
+    <v-row>
+      <v-col xs12 sm6 class="d-flex justify-center">
+        <v-btn large to="/meetups" class="info mx-2">Explore Meetups</v-btn>
+        <v-btn large to="/meetup/new" class="info mx-2">Organize Meetups</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-carousel>
+          <v-carousel-item v-for="(item,i) in meetups" :key="i" :src="item.imageURL">
+          </v-carousel-item>
+        </v-carousel>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -16,6 +26,11 @@ export default {
   components: {
 
   },
-  props:['inhalt']
+  props:['inhalt'],
+  data:() =>({
+    meetups:[
+      {imageURL:require("@/assets/ensiferum.jpg"), id: 'asdfgh', title: 'meetup in New York'}
+      ]
+})
 }
 </script>

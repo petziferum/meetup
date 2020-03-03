@@ -1,40 +1,61 @@
 <template>
   <v-app>
-    <v-app-bar app >
-      <v-app-bar-nav-icon @click.native="sideNav = !sideNav" class="hidden-sm-and-down"></v-app-bar-nav-icon>
+    <v-app-bar app clipped-left>
+
+      <v-app-bar-nav-icon @click.stop="sideNav = !sideNav" class="hidden-sm-and-up"></v-app-bar-nav-icon>
+      <v-toolbar-title class="header" style="cursor:pointer" tag="span"><router-link to="/" tag="span"> Stammtisch APP</router-link></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text class="hidden-xs-only" @click="showMeetups = !showMeetups"><v-icon left>mdi-account</v-icon>View Meetups</v-btn>
+      <v-btn v-for="item in menuItems" :key="item.id" text class="hidden-xs-only" :to="item.link">
+        <v-icon left>{{item.icon}}</v-icon>
+        {{item.title}}
+      </v-btn>
+
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <navigation-drawer :visible="sideNav" v-on:settings="settings = !settings"  />
+    <v-navigation-drawer app v-model="sideNav" temporary>
+      <v-list dense>
+        <v-list-item link v-for="item in menuItems" :key="item.id" to="item.link">
+          <v-list-item-action>
+            <v-icon>{{item.icon}}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title >{{item.title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-    <v-content class="ma-4">
-      <h1>Home</h1>
+    <v-content>
 
       <span v-if="showMeetups"><v-alert color="success" border="left" colored-border elevation="10">Upcoming Meetups</v-alert> </span>
-
-      <app-home inhalt="Settings"></app-home>
+      <router-view />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import NavigationDrawer from "@/components/NavigationDrawer"
-import appHome from "@/views/Home"
+//import NavigationDrawer from "@/components/NavigationDrawer"
+
 
 export default {
   name: 'App',
 
   components: {
-    NavigationDrawer,
-    appHome
+
   },
 
   data: () => ({
-    sideNav: false,
+    sideNav: null,
     settings:true,
-    showMeetups: false
+    showMeetups: false,
+    menuItems:[
+      {icon: 'mdi-account',title:'View Meetups', link: '/meetups'},
+      {icon:'mdi-home',title: 'Organize Meetups', link: '/meetup/new'},
+      {icon:'mdi-cactus',title: 'Profile', link: '/profile'},
+      {icon:'mdi-face',title: 'Sign Up', link: '/signup'},
+      {icon:'mdi-lock',title: 'Sign In',  link: '/signin'}
+    ]
   }),
 };
 </script>
