@@ -22,12 +22,13 @@ const routes = [
     component: Meetups
   },
   {
-    path:'/meetups/:id',
-    name:'Meetup',
+    path:'/meetup/:id',
+    name:'meetup',
+    props:true,
     component: Meetup
   },
   {
-    path: '/meetup/new',
+    path: '/newmeetup',
     name: 'CreateMeetup',
     component: CreateMeetup
   },

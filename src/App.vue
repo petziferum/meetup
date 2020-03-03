@@ -15,7 +15,7 @@
 
     <v-navigation-drawer app v-model="sideNav" temporary>
       <v-list dense>
-        <v-list-item link v-for="item in menuItems" :key="item.id" to="item.link">
+        <v-list-item link v-for="item in menuItems" :key="item.id" :to="item.link">
           <v-list-item-action>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-item-action>
@@ -51,7 +51,7 @@ export default {
     showMeetups: false,
     menuItems:[
       {icon: 'mdi-account',title:'View Meetups', link: '/meetups'},
-      {icon:'mdi-home',title: 'Organize Meetups', link: '/meetup/new'},
+      {icon:'mdi-home',title: 'Organize Meetups', link: '/newmeetup'},
       {icon:'mdi-cactus',title: 'Profile', link: '/profile'},
       {icon:'mdi-face',title: 'Sign Up', link: '/signup'},
       {icon:'mdi-lock',title: 'Sign In',  link: '/signin'}

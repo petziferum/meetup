@@ -2,15 +2,15 @@
     <v-container>
         <v-row>
             <v-card shaped>
-                <v-card-title>Title des Meetings</v-card-title>
+                <v-card-title>{{meetup.title}}</v-card-title>
                 <v-img
                         class="ma-0"
-                        src="https://upload.wikimedia.org/wikipedia/commons/4/47/New_york_times_square-terabass.jpg"
+                        :src="meetup.src"
                         height="300px"
                 ></v-img>
                 <v-card-text>
-                    <div>27.04.2020</div>
-                    <div>Augustiner Keller</div>
+                    <div>{{meetup.location}}</div>
+                    <div>Datum: {{meetup.date}}</div>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="primary">Teilnehmen!</v-btn>
@@ -22,7 +22,13 @@
 
 <script>
     export default {
-        name: "Meetup"
+        props:['id'],
+        computed:{
+            meetup () {
+                console.log("ID = ",this.id)
+                return this.$store.getters.loadedMeetup(parseInt(this.id))
+            }
+        }
     }
 </script>
 
