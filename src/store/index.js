@@ -22,8 +22,23 @@ loadedMeetups:[{
     user:{id:'userDummy',registeredMeetups:[1]}
   },
   mutations: {
+    createMeetup (state, payload){
+      state.loadedMeetups.push(payload)
+    }
   },
   actions: {
+    createMeetup({commit}, payload){
+      const meetup = {
+        title:payload.title,
+        location: payload.location,
+        imgsrc: payload.imgsrc,
+        date: payload.date,
+        description: payload.description,
+        id: 12
+      }
+      //Reach out to firebase and store it
+      commit('createMeetup',meetup)
+    }
   },
   getters: {
     loadedMeetups:(state) => {

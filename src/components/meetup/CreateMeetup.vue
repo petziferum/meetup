@@ -1,12 +1,13 @@
 <template>
     <v-container>
-        <span class="header-2">Create new Meetup</span>
+        <span class="">Create new Meetup</span>
         <v-divider></v-divider>
-        <v-row dense>
-            <v-col lg="3" md="6">
-                <v-text-field append-icon="mdi-cactus" filled label="Title">
+        <v-form v-model="valid" @submit.prevent="onCreateMeetup">
+        <v-row >
+            <v-col lg="6" md="6">
+                <v-text-field :rules="titleRules" v-model="title" :counter="5" append-icon="mdi-cactus" filled label="Title">
                 </v-text-field>
-                <v-text-field label="Location" filled name="location"></v-text-field>
+                <v-text-field v-model="location" label="Location" filled name="location" :rules="locationRules"></v-text-field>
                 <v-menu
                 v-model="menu"
                 :close-on-content-click="false"
@@ -23,18 +24,65 @@
                     <v-date-picker v-model="date" @input="menu = false" no-title scrollable>
                     </v-date-picker>
                 </v-menu>
+                <v-text-field
+                    name="imgsrc"
+                    label="Image"
+                    id="imgsrc"
+                v-model="imgsrc"></v-text-field>
+                <img height="200px" :src="imgsrc">
                 <v-textarea label="Description" hint="Beschreibe kurz die Veranstaltung"></v-textarea>
+                <v-btn class="primary" :disabled="!valid" type="submit">Create Meetup</v-btn>
             </v-col>
         </v-row>
+        </v-form>
     </v-container>
 </template>
 
 <script>
     export default {
         data:() =>({
+            valid:false,
             date: new Date().toISOString().substr(0, 10),
             menu:false,
-        })
+            title:'',
+            imgsrc:'',
+            location:'',
+            description: '',
+
+            titleRules:[
+                v => !!v || 'Title is required',
+                v => 5 <= v.length  || 'Title must be more than 5 characters',
+            ],
+            locationRules:[
+                v => !!v || 'Location is required',
+            ],
+            emailRules: [
+                v => !!v || 'E-mail is required',
+                v => /.+@.+/.test(v) || 'E-mail must be valid',
+            ],
+
+        }),
+        methods:{
+            onCreateMeetup(){
+                if(!this.formIsValid) {
+                    return
+                }
+                const meetupData ={
+                    title:this.title,
+                    location: this.location,
+                    imgsrc: this.imgsrc,
+                    description: this.description,
+                    date: this.date
+                }
+                this.$store.dispatch('createMeetup', meetupData)
+                this.$router.push('/meetups')
+            }
+        },
+        computed:{
+            formIsValid(){
+                return this.title !== '' && this.location !=='' && this.imagesrc !== ''
+            }
+        }
     }
 </script>
 

@@ -6,7 +6,7 @@
                     <v-container class="ma-0 pa-0">
                         <v-row class="ma-0 pa-0">
                             <v-col cols="auto" class="ma-0 pa-0">
-                                <v-img  height="200" width="300" :src="meetup.src"></v-img>
+                                <v-img  height="200px" width="300px" :src="meetup.src"></v-img>
                             </v-col>
                             <v-col cols="auto">
                                 <v-card-title>{{meetup.title}}</v-card-title>
