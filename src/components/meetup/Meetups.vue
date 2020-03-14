@@ -1,12 +1,12 @@
 <template>
     <v-container>
         <v-row>
-            <v-col v-for="meetup in meetups" :key="meetup.id">
-                <v-card  shaped class="d-inline-block pa-0" width="80%" style="overflow:hidden" color="info">
+            <v-col cols="12" v-for="meetup in meetups" :key="meetup.id">
+                <v-card max-height="200px" shaped class="d-inline-block pa-0" width="80%" style="overflow:hidden" color="white">
                     <v-container class="ma-0 pa-0">
                         <v-row class="ma-0 pa-0">
                             <v-col cols="auto" class="ma-0 pa-0">
-                                <v-img  height="200px" width="300px" :src="meetup.src"></v-img>
+                                <v-img  height="200px" width="300px" :src="meetup.imgsrc"></v-img>
                             </v-col>
                             <v-col cols="auto">
                                 <v-card-title>{{meetup.title}}</v-card-title>

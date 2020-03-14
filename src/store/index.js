@@ -6,16 +6,17 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
 loadedMeetups:[{
-  src:require("@/assets/ensiferum.jpg"),
+  imgsrc:require("@/assets/ensiferum.jpg"),
   id: 1,
   title: 'Meetup in New York',
   location: 'Augustinerkeller am Timesquare',
   date:'2020-04-27'
   },
   {
-    src:require("@/assets/ensiferum.jpg"),
+    imgsrc:require("@/assets/ensiferum.jpg"),
     id: 2,
-    title: 'Meetup in New York',
+    title: 'Meetup in Aschheim',
+    location:'ufm Klo',
     date:'2020-04-29'
   }
 ],
@@ -34,7 +35,8 @@ loadedMeetups:[{
         imgsrc: payload.imgsrc,
         date: payload.date,
         description: payload.description,
-        id: 12
+        id: 123,
+        time: payload.time,
       }
       //Reach out to firebase and store it
       commit('createMeetup',meetup)

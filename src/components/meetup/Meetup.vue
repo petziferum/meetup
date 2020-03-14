@@ -5,12 +5,13 @@
                 <v-card-title>{{meetup.title}}</v-card-title>
                 <v-img
                         class="ma-0"
-                        :src="meetup.src"
+                        :src="meetup.imgsrc"
                         height="300px"
                 ></v-img>
                 <v-card-text>
                     <div>{{meetup.location}}</div>
                     <div>Datum: {{meetup.date}}</div>
+                    <div>{{meetup}}</div>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn class="primary">Teilnehmen!</v-btn>

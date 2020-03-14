@@ -9,8 +9,9 @@
     <v-row>
       <v-col>
         <v-carousel>
-          <v-carousel-item v-for="(item,i) in meetups" :key="i" :src="item.src"
+          <v-carousel-item v-for="(item,i) in meetups" :key="i" :src="item.imgsrc"
           @click="onLoadMeetup(item.id)" style="cursor: pointer">
+            <v-overlay absolute :value="item" class="pa-10">{{item}}</v-overlay>
           </v-carousel-item>
         </v-carousel>
       </v-col>
@@ -29,7 +30,7 @@ export default {
 }),
   methods: {
     onLoadMeetup(id){
-      this.$router.push('/meetups/'+id)
+      this.$router.push('/meetup/'+id)
     }
   },
   computed:{

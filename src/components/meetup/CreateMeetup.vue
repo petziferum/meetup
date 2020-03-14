@@ -20,15 +20,41 @@
                         label="Date"
                         v-model="date"
                         v-on="on"
-                ></v-text-field></template>
+                        prepend-icon="mdi-calendar"
+                ></v-text-field>
+                    </template>
                     <v-date-picker v-model="date" @input="menu = false" no-title scrollable>
                     </v-date-picker>
+                </v-menu>
+                <v-menu
+                    ref="menu"
+                    v-model="timepicker"
+                    :return-value.sync="time"
+                    max-width="290px"
+                    min-width="290px"
+                    offset-y
+                    :close-on-content-click="false"
+                    nudge-right="40"
+                    >
+                    <template v-slot:activator="{ on }">
+                        <v-text-field label="Time" v-model="time" v-on="on" prepend-icon="mdi-clock"></v-text-field>
+                    </template>
+                    <v-time-picker
+                        v-if="timepicker"
+                        v-model="time"
+                        full-width
+                        format="24hr"
+                        @click:minute="$refs.menu.save(time)"
+                        >
+                    </v-time-picker>
                 </v-menu>
                 <v-text-field
                     name="imgsrc"
                     label="Image"
                     id="imgsrc"
-                v-model="imgsrc"></v-text-field>
+                v-model="imgsrc"
+                prepend-icon="mdi-image"
+                ></v-text-field>
                 <img height="200px" :src="imgsrc">
                 <v-textarea label="Description" hint="Beschreibe kurz die Veranstaltung"></v-textarea>
                 <v-btn class="primary" :disabled="!valid" type="submit">Create Meetup</v-btn>
@@ -41,6 +67,8 @@
 <script>
     export default {
         data:() =>({
+            timepicker:false,
+            time:null,
             valid:false,
             date: new Date().toISOString().substr(0, 10),
             menu:false,
@@ -72,7 +100,8 @@
                     location: this.location,
                     imgsrc: this.imgsrc,
                     description: this.description,
-                    date: this.date
+                    date: this.date,
+                    time:this.time,
                 }
                 this.$store.dispatch('createMeetup', meetupData)
                 this.$router.push('/meetups')
