@@ -3,7 +3,7 @@
     <v-app-bar app >
       <v-app-bar-nav-icon @click.native="sideNav = !sideNav" class="hidden-sm-and-down"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <v-btn text class="hidden-xs-only""><v-icon left>mdi-account</v-icon>View Meetups</v-btn>
+      <v-btn text class="hidden-xs-only"><v-icon left>mdi-account</v-icon>View Meetups</v-btn>
     </v-app-bar>
     <v-navigation-drawer app v-model="sideNav">
       <v-list dense>
