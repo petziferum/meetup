@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as firebase from 'firebase'
 
 Vue.use(Vuex)
 
@@ -20,11 +21,17 @@ loadedMeetups:[{
     date:'2020-04-29'
   }
 ],
-    user:{id:'userDummy',registeredMeetups:[1]}
+    user: null,
   },
   mutations: {
     createMeetup (state, payload){
       state.loadedMeetups.push(payload)
+    },
+    setUser (state,payload) {
+      state.user = payload
+    },
+    signUserUp (state, payload) {
+      state.user = payload
     }
   },
   actions: {
@@ -40,6 +47,33 @@ loadedMeetups:[{
       }
       //Reach out to firebase and store it
       commit('createMeetup',meetup)
+    },
+    signUserUp ({commit},payload) {
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+          .then(
+              user =>{
+                const newUser = {
+                  id: user.uid,
+                  registeredMeetups: []
+                }
+                commit('signUserUp', newUser)
+                console.log("new User:", newUser)
+              })
+          .catch (error =>{ console.log(error)})
+      },
+    signUserIn ({commit},payload) {
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+          .then(
+              user => {
+                const newUser = {
+                  id: user.uid,
+                  registeredMeetups: []
+                }
+                commit('setUser',newUser)
+              }
+          ).catch(errr => {
+            console.log(errr)
+      })
     }
   },
   getters: {
@@ -57,6 +91,9 @@ loadedMeetups:[{
           return meetup.id === meetupId
         })
       }
+    },
+    user (state) {
+      return state.user
     }
   },
   modules: {
