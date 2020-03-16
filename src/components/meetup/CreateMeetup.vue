@@ -56,7 +56,7 @@
                 prepend-icon="mdi-image"
                 ></v-text-field>
                 <img height="200px" :src="imgsrc">
-                <v-textarea label="Description" hint="Beschreibe kurz die Veranstaltung"></v-textarea>
+                <v-textarea v-model="description" label="Description" hint="Beschreibe kurz die Veranstaltung"></v-textarea>
                 <v-btn class="primary" :disabled="!valid" type="submit">Create Meetup</v-btn>
             </v-col>
         </v-row>

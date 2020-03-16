@@ -3,7 +3,7 @@
     <v-row>
       <v-col xs12 sm6 class="d-flex justify-center">
         <v-btn large to="/meetups" class="info mx-2">Explore Meetups</v-btn>
-        <v-btn large to="/meetup/new" class="info mx-2">Organize Meetups</v-btn>
+        <v-btn large to="/newmeetup" class="info mx-2">Organize Meetups</v-btn>
       </v-col>
     </v-row>
     <v-row>

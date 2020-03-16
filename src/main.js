@@ -4,8 +4,11 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import * as firebase from 'firebase'
+import AlertCmp from './components/shared/Alert'
 
 Vue.config.productionTip = false
+
+Vue.component('app-alert', AlertCmp)
 
 new Vue({
   router,
@@ -22,5 +25,12 @@ new Vue({
         messagingSenderId: "592274862907",
         appId: "1:592274862907:web:36344466cd8a4bb93f3d1e"
         })
+      firebase.auth().onAuthStateChanged((user) =>{
+          if (user) {
+              this.$store.dispatch('autoSignIn', user)
+              this.$store.dispatch('loadMeetups')
+          }
+      })
+
   }
 }).$mount('#app')

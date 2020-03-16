@@ -1,5 +1,10 @@
 <template>
     <v-container>
+        <v-row v-if="error">
+            <v-col cols="12" class="d-flex justify-center">
+                <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
+            </v-col>
+        </v-row>
         <v-row>
             <v-col cols="12" class="d-flex justify-center">
                 <v-card width="300px" class="px-2">
@@ -25,7 +30,7 @@
                                     type="password"
                                     required>
                             </v-text-field>
-                                <v-btn type="submit" color="blue">Sign In</v-btn>
+                                <v-btn type="submit" color="blue" :disabled="loading" :loading="loading">Sign In</v-btn>
                             </v-col>
                         </v-row>
                     </v-form>
@@ -53,12 +58,18 @@
         computed: {
             user () {
                 return this.$store.getters.user
+            },
+            error (){
+                return this.$store.getters.error
+            },
+            loading () {
+                return this.$store.getters.loading
             }
         },
         watch: {
             user (value) {
                 if(value !== null && value !== undefined){
-                    this.$router.push('/meetups')
+                    this.$router.push('/')
                 }
             }
         },
@@ -66,7 +77,10 @@
             onSignIn () {
                 this.$store.dispatch('signUserIn', {email:this.email, password:this.password})
             },
-
+            onDismissed () {
+                console.log('Dissmissed Alert')
+                this.$store.dispatch('clearError')
+            }
         }
     }
 </script>

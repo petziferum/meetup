@@ -1,7 +1,8 @@
 <template>
     <v-container>
         <v-row>
-            <v-card shaped>
+            <v-col cols="12" class="d-flex justify-center">
+            <v-card shaped max-width="500px">
                 <v-card-title>{{meetup.title}}</v-card-title>
                 <v-img
                         class="ma-0"
@@ -17,6 +18,7 @@
                     <v-btn class="primary">Teilnehmen!</v-btn>
                 </v-card-actions>
             </v-card>
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -27,7 +29,7 @@
         computed:{
             meetup () {
                 console.log("ID = ",this.id)
-                return this.$store.getters.loadedMeetup(parseInt(this.id))
+                return this.$store.getters.loadedMeetup(this.id)
             }
         }
     }
