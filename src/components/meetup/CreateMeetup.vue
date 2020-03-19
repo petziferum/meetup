@@ -48,14 +48,18 @@
                         >
                     </v-time-picker>
                 </v-menu>
-                <v-text-field
-                    name="imgsrc"
-                    label="Image"
-                    id="imgsrc"
-                v-model="imgsrc"
-                prepend-icon="mdi-image"
-                ></v-text-field>
-                <img height="200px" :src="imgsrc">
+                <v-row>
+                    <v-col cols-12>
+                        <v-btn outlined class="primary" @click="onPickFile" dark><v-icon left>mdi-camera-outline</v-icon> Image</v-btn>
+                        <input
+                                v-show="false"
+                                type="file"
+                                prepend-icon="mdi-camera"
+                                ref="fileInput"
+                                @change="onFilePicked">
+                    </v-col>
+                </v-row>
+                <img height="100px" :src="imgsrc">
                 <v-textarea v-model="description" label="Description" hint="Beschreibe kurz die Veranstaltung"></v-textarea>
                 <v-btn class="primary" :disabled="!valid" type="submit">Create Meetup</v-btn>
             </v-col>
@@ -73,10 +77,10 @@
             date: new Date().toISOString().substr(0, 10),
             menu:false,
             title:'',
-            imgsrc:'',
+            imgsrc: '',
             location:'',
             description: '',
-
+            image:null,
             titleRules:[
                 v => !!v || 'Title is required',
                 v => 5 <= v.length  || 'Title must be more than 5 characters',
@@ -95,17 +99,37 @@
                 if(!this.formIsValid) {
                     return
                 }
+                if(!this.image){
+                    return
+                }
                 const meetupData ={
                     title:this.title,
                     location: this.location,
-                    imgsrc: this.imgsrc,
+                    image:this.image,
                     description: this.description,
                     date: this.date,
                     time:this.time,
                 }
                 this.$store.dispatch('createMeetup', meetupData)
                 this.$router.push('/meetups')
+            },
+            onPickFile() {
+                this.$refs.fileInput.click()
+            },
+            onFilePicked(event){
+                const files = event.target.files
+                let filename = files[0].name
+                if (filename.lastIndexOf('.') <= 0){
+                    return alert('Falsch!')
+                }
+                const fileReader = new FileReader()
+                fileReader.addEventListener('load', () =>{
+                    this.imgsrc = fileReader.result
+                })
+                fileReader.readAsDataURL(files[0])
+                this.image = files[0]
             }
+
         },
         computed:{
             formIsValid(){

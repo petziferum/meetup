@@ -63,25 +63,45 @@ loadedMeetups:[],
       const meetup = {
         title:payload.title,
         location: payload.location,
-        imgsrc: payload.imgsrc,
         date: payload.date,
         description: payload.description,
         time: payload.time,
         creatorId:getters.user.id
       }
       //Reach out to firebase and store it
+        let imgsrc
+        let key
+        let ext
       firebase.database().ref('meetups').push(meetup)
           .then((data) => {
-            const key = data.key
-            console.log("data:", data)
-            commit('createMeetup',{
-              ...meetup,
-              id: key //key wird im nachhinein erzeugt und angehängt
+            key = data.key
+              return key
             })
-          }).catch((error) =>{
+          .then(key => {
+              const filename = payload.image.name
+              ext = filename.slice(filename.lastIndexOf('.'))
+              return firebase.storage().ref('meetups/' +key+ '.'+ ext).put(payload.image)
+          })
+          .then(fileData => {
+              console.log(fileData)
+              return firebase.storage().ref('meetups/' +key+ '.' + ext).getDownloadURL()
+          })
+          .then(URL => {
+              imgsrc = URL
+              console.log(imgsrc)
+              return firebase.database().ref('meetups').child(key).update({ imgsrc: imgsrc })
+          })
+          .then(() => {
+              commit('createMeetup', {
+                  ...meetup,
+                  id: key, //key wird im nachhinein erzeugt und angehängt
+                  link: '/meetups/' + key,
+                  imgsrc: imgsrc
+              })
+          })
+          .catch((error) =>{
             console.log(error)
       })
-
     },
     signUserUp ({commit},payload) {
       commit('setLoading',true)
