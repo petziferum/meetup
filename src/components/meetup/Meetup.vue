@@ -7,7 +7,7 @@
                 <v-img
                         class="ma-0"
                         :src="meetup.imgsrc"
-                        height="300px"
+
                 ></v-img>
                 <v-card-text>
                     <div>{{meetup.location}}</div>

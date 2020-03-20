@@ -41,11 +41,13 @@ loadedMeetups:[],
               const meetups = []
               const obj = data.val()
               for (let key in obj) {
+                  console.log(obj[key])
                 meetups.push({
                   id: key,
                   title: obj[key].title,
                   description: obj[key].description,
                   imgsrc: obj[key].imgsrc,
+                    filename: obj[key].filename,
                   date: obj[key].date,
                   time: obj[key].time,
                   creatorId:getters.user.id
@@ -66,6 +68,7 @@ loadedMeetups:[],
         date: payload.date,
         description: payload.description,
         time: payload.time,
+          filename: payload.filename,
         creatorId:getters.user.id
       }
       //Reach out to firebase and store it

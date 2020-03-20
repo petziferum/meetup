@@ -53,10 +53,12 @@
                         <v-btn outlined class="primary" @click="onPickFile" dark><v-icon left>mdi-camera-outline</v-icon> Image</v-btn>
                         <input
                                 v-show="false"
+                                contenteditable="false"
                                 type="file"
                                 prepend-icon="mdi-camera"
                                 ref="fileInput"
                                 @change="onFilePicked">
+                        <span v-if="image"> {{filename}}</span>
                     </v-col>
                 </v-row>
                 <img height="100px" :src="imgsrc">
@@ -78,9 +80,10 @@
             menu:false,
             title:'',
             imgsrc: '',
+            image:null,
+            filename:null,
             location:'',
             description: '',
-            image:null,
             titleRules:[
                 v => !!v || 'Title is required',
                 v => 5 <= v.length  || 'Title must be more than 5 characters',
@@ -109,6 +112,7 @@
                     description: this.description,
                     date: this.date,
                     time:this.time,
+                    filename: this.filename,
                 }
                 this.$store.dispatch('createMeetup', meetupData)
                 this.$router.push('/meetups')
@@ -118,8 +122,8 @@
             },
             onFilePicked(event){
                 const files = event.target.files
-                let filename = files[0].name
-                if (filename.lastIndexOf('.') <= 0){
+                this.filename = files[0].name
+                if (this.filename.lastIndexOf('.') <= 0){
                     return alert('Falsch!')
                 }
                 const fileReader = new FileReader()
