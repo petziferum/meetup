@@ -35,7 +35,7 @@ loadedMeetups:[],
   },
 
   actions: {
-    loadMeetups ({commit,getters}) {
+    loadMeetups ({commit}) {
         commit('setLoading', true)
         firebase.database().ref('meetups').once('value')
             .then((data) => {
@@ -49,9 +49,10 @@ loadedMeetups:[],
                   description: obj[key].description,
                   imgsrc: obj[key].imgsrc,
                     filename: obj[key].filename,
+                    location: obj[key].location,
                   date: obj[key].date,
                   time: obj[key].time,
-                  creatorId:getters.user.id
+                  creatorId:obj[key].creatorId
                 })
               }
               commit('loadMeetups', meetups)

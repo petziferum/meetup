@@ -15,6 +15,7 @@
       </v-btn>
 
       <v-spacer></v-spacer>
+      {{ user}}
     </v-app-bar>
 
     <v-navigation-drawer app v-model="sideNav" temporary>
@@ -79,6 +80,9 @@ export default {
     },
     userIsAuthenticated () {
       return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    },
+    user () {
+      return this.$store.getters.user
     }
   },
   methods: {

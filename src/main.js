@@ -5,10 +5,12 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import * as firebase from 'firebase'
 import AlertCmp from './components/shared/Alert'
+import EditMeetupDetailsDialog from './components/meetup/Edit/EditMeetupDetailsDialog'
 
 Vue.config.productionTip = false
 
 Vue.component('app-alert', AlertCmp)
+Vue.component('app-edit-meetup-details-dialog', EditMeetupDetailsDialog)
 
 new Vue({
   router,

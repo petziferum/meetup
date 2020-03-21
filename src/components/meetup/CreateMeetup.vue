@@ -5,9 +5,19 @@
         <v-form v-model="valid" @submit.prevent="onCreateMeetup">
         <v-row >
             <v-col lg="6" md="6">
-                <v-text-field :rules="titleRules" v-model="title" :counter="5" append-icon="mdi-cactus" filled label="Title">
+                <v-text-field
+                        :rules="titleRules"
+                        v-model="title"
+                        :counter="5"
+                        append-icon="mdi-cactus"
+                        filled label="Title">
                 </v-text-field>
-                <v-text-field v-model="location" label="Location" filled name="location" :rules="locationRules"></v-text-field>
+                <v-text-field
+                        v-model="location"
+                        label="Location"
+                        filled name="location"
+                        :rules="locationRules"
+                ></v-text-field>
                 <v-menu
                 v-model="menu"
                 :close-on-content-click="false"

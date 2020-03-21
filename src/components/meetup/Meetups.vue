@@ -11,6 +11,7 @@
                         color="white"
                         elevation="10"
                 >
+
                     <v-container class="ma-0 pa-0">
                         <v-row no-gutters class="ma-0 pa-0">
                             <v-col cols="12" sm="12" md="6" lg="6" class="ma-0 pa-0">
