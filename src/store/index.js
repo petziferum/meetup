@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
 loadedMeetups:[],
     user: null,
-    loading: false,
+    loading: true,
     error: null,
   },
 
@@ -23,6 +23,7 @@ loadedMeetups:[],
       state.user = payload
     },
     setLoading (state, payload){
+        console.log(payload)
       state.loading = payload
     },
     setError (state, payload) {
@@ -127,7 +128,7 @@ loadedMeetups:[],
           })
       },
     signUserIn ({commit},payload) {
-      commit('setLoading',false)
+      commit('setLoading',true)
       commit('clearError')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
           .then(
@@ -145,8 +146,10 @@ loadedMeetups:[],
             console.log(error)
       })
     },
-    autoSignIn ({commit}, payload){
+    autoSignIn ({commit, state}, payload){
       commit ('setUser', {id: payload.uid, registeredMeetups: []})
+        commit('setLoading', false)
+        console.log(state.loading)
     },
     logout ({commit}){
       firebase.auth().signOut()

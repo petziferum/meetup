@@ -39,8 +39,7 @@
     </v-navigation-drawer>
 
     <v-content>
-
-      <span v-if="showMeetups"><v-alert color="success" border="left" colored-border elevation="10">Upcoming Meetups</v-alert> </span>
+      <!--<span v-if="showMeetups"><v-alert color="success" border="left" colored-border elevation="10">Upcoming Meetups</v-alert> </span>//-->
       <router-view />
     </v-content>
   </v-app>

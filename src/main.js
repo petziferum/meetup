@@ -30,6 +30,9 @@ new Vue({
               this.$store.dispatch('autoSignIn', user)
               this.$store.dispatch('loadMeetups')
           }
+          else {
+              this.$store.state.loading = false
+          }
       })
 
   }
