@@ -15,6 +15,33 @@
                     <v-row>
                         <v-col>
                             <v-text-field
+                                    name="firstName"
+                                    label="First name"
+                                    id="firstName"
+                                    v-model="firstName"
+                                    :rules="rules"
+                                    type="text"
+                                    required>
+                            </v-text-field>
+                            <v-text-field
+                                    name="lastName"
+                                    label="Last name"
+                                    id="lastName"
+                                    v-model="lastName"
+                                    :rules="rules"
+                                    type="text"
+                                    required>
+                            </v-text-field>
+                            <v-text-field
+                                    name="nickName"
+                                    label="Nickname"
+                                    id="nickName"
+                                    v-model="nickName"
+                                    :rules="rules"
+                                    type="text"
+                                    required>
+                            </v-text-field>
+                            <v-text-field
                             name="email"
                             label="Mail"
                             id="email"
@@ -22,7 +49,8 @@
                             :rules="emailRules"
                             type="email"
                             required>
-                            </v-text-field><v-text-field
+                            </v-text-field>
+                            <v-text-field
                                 name="password"
                                 label="password"
                                 id="password"
@@ -56,10 +84,16 @@
         name: "SignUp",
         data(){
             return {
+                nickName:'',
+                firstName:'',
+                lastName: '',
                 email: '',
                 password: '',
                 confirmPassword: '',
                 valid:false,
+                rules:[
+                    v => !!v || 'This Field must be entered!'
+                ],
                 emailRules: [
                     v => !!v || 'E-mail is required',
                     v => /.+@.+/.test(v) || 'E-mail must be valid',
@@ -90,6 +124,9 @@
         methods: {
             onSignup () {
                 const userData = {
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    nickName:this.nickName,
                     email: this.email,
                     password: this.password,
                     confirmPassword: this.confirmPassword,

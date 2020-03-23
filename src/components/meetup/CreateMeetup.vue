@@ -8,7 +8,6 @@
                 <v-text-field
                         :rules="titleRules"
                         v-model="title"
-                        :counter="5"
                         append-icon="mdi-cactus"
                         filled label="Title">
                 </v-text-field>
@@ -96,7 +95,7 @@
             description: '',
             titleRules:[
                 v => !!v || 'Title is required',
-                v => 5 <= v.length  || 'Title must be more than 5 characters',
+                v => v.length >= 5  || 'Title must be more than 5 characters',
             ],
             locationRules:[
                 v => !!v || 'Location is required',

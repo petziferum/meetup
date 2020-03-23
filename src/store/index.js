@@ -31,7 +31,21 @@ loadedMeetups:[],
     },
     clearError (state){
       state.error = null
-    }
+    },
+      updateMeetup (state, payload) {
+        const meetup = state.loadedMeetups.find(meetup => {
+            return meetup.id === payload.id
+        })
+          if (payload.title) {
+              meetup.title = payload.title
+          }
+          if (payload.description){
+              meetup.description = payload.description
+          }
+          if (payload.date) {
+              meetup.date = payload.date
+          }
+      }
   },
 
   actions: {
@@ -108,6 +122,29 @@ loadedMeetups:[],
             console.log(error)
       })
     },
+      updateMeetupData ({commit}, payload){
+        commit('setLoading',true)
+          const updateObj = {}
+          if (payload.title){
+              updateObj.title = payload.title
+          }
+          if (payload.description) {
+              updateObj.description = payload.description
+          }
+          if (payload.date) {
+              updateObj.date = payload.date
+          }
+          console.log(updateObj)
+          firebase.database().ref('meetups').child(payload.id).update(updateObj)
+              .then(() => {
+                    commit('setLoading', false)
+                  commit('updateMeetup', payload)
+              })
+              .catch(error => {
+                  console.log(error)
+                  commit('setLoading',false)
+              })
+      },
     signUserUp ({commit},payload) {
       commit('setLoading',true)
       commit('clearError')
@@ -117,7 +154,8 @@ loadedMeetups:[],
                 commit('setLoading',false)
                 const newUser = {
                   id: user.uid,
-                  registeredMeetups: []
+                  registeredMeetups: [],
+                    payload,
                 }
                 commit('setUser', newUser)
                 console.log("new User:", newUser)
