@@ -35,7 +35,7 @@
                         ></v-textarea>
 
                         <v-menu
-                                v-model="menu"
+                                v-model="datePicker"
                                 :close-on-content-click="false"
                                 :nudge-right="40"
                                 transition="scale-transition"
@@ -48,9 +48,33 @@
                                         v-on="on"
                                         prepend-icon="mdi-calendar"
                                 ></v-text-field>
+                                {{editableDate}}
                             </template>
-                            <v-date-picker v-model="editableDate" @input="menu = false" no-title scrollable>
+                            <v-date-picker v-model="editableDate" @input="datePicker = false" no-title scrollable>
                             </v-date-picker>
+                        </v-menu>
+
+                        <v-menu
+                                ref="menu"
+                                v-model="timepicker"
+                                :return-value.sync="editableTime"
+                                max-width="290px"
+                                min-width="290px"
+                                offset-y
+                                :close-on-content-click="false"
+                                nudge-right="40"
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-text-field label="Time" v-model="editableTime" v-on="on" prepend-icon="mdi-clock"></v-text-field>
+                            </template>
+                            <v-time-picker
+                                    v-if="timepicker"
+                                    v-model="editableTime"
+                                    full-width
+                                    format="24hr"
+                                    @click:minute="$refs.menu.save(editableTime)"
+                            >
+                            </v-time-picker>
                         </v-menu>
 
                     </v-col>
@@ -78,9 +102,11 @@
         data () {
             return {
                 dialog: false,
-                menu:false,
+                datePicker:false,
+                timepicker: false,
                 valid:false,
-                editableDate: null,
+                editableDate: new Date(),
+                editableTime:null,
                 editedTitle: this.meetup.title,
                 editedDescription: this.meetup.description,
                 rules:[
@@ -95,12 +121,14 @@
                 const newDay = new Date(this.editableDate).getUTCDate()
                 const newMonth = new Date(this.editableDate).getUTCMonth()
                 const newYear = new Date(this.editableDate).getUTCFullYear()
+                //const hours = this.editableTime.match(/^(\d+)/)[1]
                 newDate.setUTCDate(newDay)
                 newDate.setUTCMonth(newMonth)
                 newDate.setUTCFullYear(newYear)
                 const payload = {
                     id: this.meetup.id,
-                    date: newDate,
+                    date: this.editableDate,
+                    time: this.editableTime,
                     title: this.editedTitle,
                     description: this.editedDescription
                 }
@@ -109,7 +137,8 @@
             },
         },
         created () {
-            this.editableDate = new Date(this.meetup.date)
+            this.editableDate = this.meetup.date
+            this.editableTime = this.meetup.time
         }
     }
 </script>

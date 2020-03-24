@@ -45,6 +45,9 @@ loadedMeetups:[],
           if (payload.date) {
               meetup.date = payload.date
           }
+          if (payload.time) {
+              meetup.time = payload.time
+          }
       }
   },
 
@@ -123,6 +126,7 @@ loadedMeetups:[],
       })
     },
       updateMeetupData ({commit}, payload){
+        console.log(payload)
         commit('setLoading',true)
           const updateObj = {}
           if (payload.title){
@@ -132,7 +136,12 @@ loadedMeetups:[],
               updateObj.description = payload.description
           }
           if (payload.date) {
+              console.log("Date updated:", payload.date)
               updateObj.date = payload.date
+          }
+          if (payload.time) {
+              console.log("Time updated:", payload.time)
+              updateObj.time = payload.time
           }
           console.log(updateObj)
           firebase.database().ref('meetups').child(payload.id).update(updateObj)
