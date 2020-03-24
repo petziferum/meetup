@@ -15,7 +15,6 @@
       </v-btn>
 
       <v-spacer></v-spacer>
-      {{ user }}
     </v-app-bar>
 
     <v-navigation-drawer app v-model="sideNav" temporary>
