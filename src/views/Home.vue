@@ -14,9 +14,9 @@
     <v-row v-else>
       <v-row v-if="!user && !loading">
       <v-col cols="12" class="d-flex justify-center">
-        <v-alert align="center" width="30%" class="pa-2 info headline" prominent icon="mdi-account" border="left" elevation="12" >
-          <span class="title">Please Sign In!<br></span>
-          <v-btn class="ma-1">Sign Up</v-btn>
+        <v-alert align="center" width="30%" class="pa-2 pl-6 ma-2 info" prominent info icon="mdi-account" border="left" elevation="12" >
+          <span class="headline text-left">Please Sign In!<br></span>
+          <v-btn class="ma-1" to="/signup">Sign Up</v-btn>
           <v-btn class="ma-1" to="/signin">Sign In</v-btn></v-alert>
       </v-col>
     </v-row>

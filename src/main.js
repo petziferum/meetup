@@ -6,13 +6,13 @@ import vuetify from './plugins/vuetify';
 import * as firebase from 'firebase'
 import AlertCmp from './components/shared/Alert'
 import EditMeetupDetailsDialog from './components/meetup/Edit/EditMeetupDetailsDialog'
-import EditMeetupDateDialog from "./components/meetup/Edit/EditMeetupDateDialog";
+import RegisterDialog from "./components/meetup/Registration/Dialog";
 
 Vue.config.productionTip = false
 
 Vue.component('app-alert', AlertCmp)
 Vue.component('app-edit-meetup-details-dialog', EditMeetupDetailsDialog)
-Vue.component('app-edit-meetup-date-dialog', EditMeetupDateDialog)
+Vue.component('app-register-meetup-dialog', RegisterDialog)
 
 new Vue({
   router,

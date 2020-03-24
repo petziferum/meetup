@@ -21,7 +21,6 @@
                             <template v-if="userIsCreator">
                                 <app-edit-meetup-details-dialog :meetup="meetup"></app-edit-meetup-details-dialog>
                             </template>
-                        <span v-else>Lol nix da</span>
                     </v-toolbar>
                 <v-img
                         class="ma-0"
@@ -38,16 +37,13 @@
                         <div>Datum: {{meetup.date}}</div>
                         <div>Zeit: {{meetup.time}}</div></span>
                             </v-col>
-                            <v-col cols="2">
-                                <app-edit-meetup-date-dialog :meetup="meetup"></app-edit-meetup-date-dialog>
-                            </v-col>
                         </v-row>
                     </v-alert>
 
                     <div>{{meetup}}</div>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn class="primary">Teilnehmen!</v-btn>
+                    <app-register-meetup-dialog :meetup="meetup" :meetupId="meetup.id"></app-register-meetup-dialog>
                 </v-card-actions>
             </v-card>
             </v-col>

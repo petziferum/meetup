@@ -13,6 +13,21 @@ loadedMeetups:[],
   },
 
   mutations: {
+      registerUserForMeetup (state, payload) {
+        const id = payload.id
+        if (state.user.registeredMeetups.findIndex(meetup => meetup.id === id) >= 0){
+            return
+        }
+        state.user.registeredMeetups.push(id)
+          state.user.fbKey[id] = payload.fbKey
+      },
+      unregisterUserFromMeetup (state , payload){
+          const registeredMeetups = state.user.registeredMeetups
+          registeredMeetups.splice(registeredMeetups.findIndex(meetup => meetup.id === payload, 1))
+          console.log('fbKey delete: ', payload)
+          Reflect.deleteProperty(state.user.fbKey, payload) /* fbKey wird im Store nicht gelöscht */
+              console.log(state.user.fbKey)
+      },
     loadMeetups (state, payload){
       state.loadedMeetups = payload
     },
@@ -23,7 +38,6 @@ loadedMeetups:[],
       state.user = payload
     },
     setLoading (state, payload){
-        console.log(payload)
       state.loading = payload
     },
     setError (state, payload) {
@@ -48,10 +62,46 @@ loadedMeetups:[],
           if (payload.time) {
               meetup.time = payload.time
           }
-      }
+      },
   },
 
   actions: {
+      registerUserForMeetup ( {commit,getters}, payload) {
+          console.log('register: ',payload)
+          commit('setLoading', true)
+          const user = getters.user
+          firebase.database().ref('/users/' + user.id).child('/registrations/')
+              .push(payload)
+              .then((data) => {
+                  commit('setLoading', false)
+                  console.log("fbKey: ", data.key)
+                  commit('registerUserForMeetup', { id: payload, fbKey: data.key})
+              })
+              .catch(error => {
+                  console.log(error)
+                  commit('setLoading', false)
+              })
+      },
+      unregisterUserFromMeetup ({commit, getters},payload){
+          console.log('unregister: ',payload)
+          commit('setLoading', true)
+          const user = getters.user
+          if (!user.fbKey){
+              console.log("kein fbKey!")
+              return
+          }
+          const fbKey = user.fbKey[payload]
+          firebase.database().ref('/users/' + user.id + '/registrations/').child(fbKey)
+              .remove()
+              .then(() => {
+                  commit('setLoading', false)
+                  commit('unregisterUserFromMeetup',fbKey," ", payload)
+              })
+              .catch(error => {
+                  console.log(error)
+                  commit('setLoading', false)
+              })
+      },
     loadMeetups ({commit}) {
         commit('setLoading', true)
         firebase.database().ref('meetups').once('value')
@@ -59,7 +109,6 @@ loadedMeetups:[],
               const meetups = []
               const obj = data.val()
               for (let key in obj) {
-                  console.log(obj[key])
                 meetups.push({
                   id: key,
                   title: obj[key].title,
@@ -72,6 +121,7 @@ loadedMeetups:[],
                   creatorId:obj[key].creatorId
                 })
               }
+              console.log("Meetups loaded: ", meetups.length)
               commit('loadMeetups', meetups)
               commit('setLoading', false)
             })
@@ -126,7 +176,7 @@ loadedMeetups:[],
       })
     },
       updateMeetupData ({commit}, payload){
-        console.log(payload)
+        console.log("update ",payload)
         commit('setLoading',true)
           const updateObj = {}
           if (payload.title){
@@ -164,6 +214,7 @@ loadedMeetups:[],
                 const newUser = {
                   id: user.uid,
                   registeredMeetups: [],
+                    fbKey:{},
                     payload,
                 }
                 commit('setUser', newUser)
@@ -184,6 +235,7 @@ loadedMeetups:[],
                 commit('setLoading',false)
                 const newUser = {
                   id: user.uid,
+                    fbKey:{},
                   registeredMeetups: []
                 }
                 commit('setUser',newUser)
@@ -194,10 +246,13 @@ loadedMeetups:[],
             console.log(error)
       })
     },
-    autoSignIn ({commit, state}, payload){
-      commit ('setUser', {id: payload.uid, registeredMeetups: []})
+    autoSignIn ({commit}, payload){
+      commit ('setUser', {
+          id: payload.uid,
+          fbKey:{},
+          registeredMeetups: []
+      })
         commit('setLoading', false)
-        console.log(state.loading)
     },
     logout ({commit}){
       firebase.auth().signOut()
