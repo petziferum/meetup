@@ -3,7 +3,7 @@
         <template v-slot:activator="{ on }">
             <v-btn
                     text
-                    color="success"
+                    :color="userIsRegistered ? 'red' : 'green' "
                     elevation="2"
                     acccent
                     small
@@ -14,7 +14,7 @@
             </v-btn>
         </template>
 
-        <v-card>
+        <v-card :color="userIsRegistered ? 'red' : 'green'">
             <v-container>
                 <v-form v-model="valid" @submit.prevent="onSaveChanges">
                     <v-row>
@@ -25,6 +25,7 @@
                     </v-row>
                     <v-row>
                         <v-col cols="12">
+                            {{ registerMessage() }}
                             You can always change your decision later
                         </v-col>
                     </v-row>
@@ -78,6 +79,13 @@
                     this.$store.dispatch('unregisterUserFromMeetup', this.meetupId)
                 }else {
                     this.$store.dispatch('registerUserForMeetup', this.meetupId)
+                }
+            },
+            registerMessage() {
+                if(this.userIsRegistered) {
+                    return "your are already registered"
+                } else {
+                    return "Please Register"
                 }
             }
         }

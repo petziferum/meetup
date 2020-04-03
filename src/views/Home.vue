@@ -13,7 +13,7 @@
     </v-row>
     <v-row v-else >
       <v-row v-if="!user && !loading" class="d-flex justify-center">
-      <v-col cols="12" md="6" lg="6" style="border: 1px solid">
+      <v-col cols="12" md="6" lg="6">
         <v-alert align="center" width="100%" class="pa-2 pl-6 info" prominent info icon="mdi-account" border="left" elevation="12" >
           <span class="headline text-left">Please Sign In!<br></span>
           <v-btn class="ma-1" to="/signup">Sign Up</v-btn>

@@ -43,7 +43,7 @@
                     <div>{{meetup}}</div>
                 </v-card-text>
                 <v-card-actions>
-                    <app-register-meetup-dialog :meetup="meetup" :meetupId="meetup.id"></app-register-meetup-dialog>
+                    <app-register-meetup-dialog :meetup="meetup" :meetupId="meetup.id" v-if="userIsAuthenticated && !userIsCreator"></app-register-meetup-dialog>
                 </v-card-actions>
             </v-card>
             </v-col>
