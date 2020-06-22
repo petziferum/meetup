@@ -73,6 +73,7 @@ export default {
         {icon: 'mdi-account',title:'View Meetups', link: '/meetups'},
         {icon:'mdi-home',title: 'Organize Meetups', link: '/newmeetup'},
         {icon:'mdi-cactus',title: 'Profile', link: '/profile'},
+          {icon:'mdi-question',title: 'Documentary', link: '/documentary'},
                 ]
       }
       return menuItems

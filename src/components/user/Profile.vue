@@ -31,7 +31,6 @@
 
 
                 <v-alert color="error">{{feedback}}</v-alert>
-                {{autos}}
             </v-col>
         </v-row>
     </v-container>
@@ -56,22 +55,6 @@
 
         }),
         methods: {
-            autoErstellen(name,weight,speed) {
-                class Car {
-                    constructor(brand, weight, speed) {
-                        this.carname = brand;
-                        this.gewicht = weight;
-                        this.geschwindigkeit = speed;
-                    }
-                }
-                var auto = new Car(name,weight,speed)
-                this.autos.push(auto)
-                this.autobrand = ''
-                this.weight=''
-                this.speed=''
-
-            },
-
         },
         computed: {
             zahl() {
@@ -86,11 +69,5 @@
 </script>
 
 <style lang="scss">
-    .v-card--material {
-        &__header {
-            &.v-card {
-                border-radius: 4px;
-            }
-        }
-    }
+
 </style>
